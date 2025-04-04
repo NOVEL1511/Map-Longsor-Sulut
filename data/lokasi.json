@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "nama": "Desa Bailang",
+        "alamat": "Jl. Loreng",
+        "lat": 1.52711,
+        "lng": 124.85014,
+        "risiko": "Rendah",
+        "penyebab": "Curah hujan tinggi, erosi tanah",
+        "dampak": "Akses Jalan Terhalang",
+        "jenis_tanah": "Alluvial dan Tanah Liat",
+        "googleMapsLink": "https://maps.app.goo.gl/Nr4wV1bkckJ9oa9x7",
+        "catatan": "Dekat Jalan",
+        "gambar": "img/FotoBailang.jpg"
+    },
+    {
+        "id": 2,
+        "nama": "Desa B",
+        "alamat": "Jl. Poros Desa B, Kabupaten Y",
+        "lat": -1.478,
+        "lng": 124.533,
+        "risiko": "Sedang",
+        "penyebab": "Erosi tanah dan penggundulan hutan",
+        "dampak": "Longsor kecil, akses jalan terputus",
+        "jenis_tanah": "Tanah liat",
+        "googleMapsLink": "https://www.google.com/maps?q=-1.478,124.533",
+        "catatan": "Terdapat sistem drainase yang kurang baik",
+        "gambar": "images/desa_b.jpg"
+    }
+]
