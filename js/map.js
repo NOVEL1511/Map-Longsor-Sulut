@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Inisialisasi peta menggunakan Leaflet.js
-    var map = L.map('map').setView([-1.5, 124.5], 7); // Koordinat pusat Sulawesi Utara
+    var map = L.map('map').setView([1.52711, 124.85014], 7); // Koordinat pusat Sulawesi Utara
     
     // Tambahkan layer peta dari OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
