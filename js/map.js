@@ -1,19 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Inisialisasi peta menggunakan Leaflet.js
-    var map = L.map('map').setView([1.52711, 124.85014], 7); // Koordinat pusat Sulawesi Utara
-    
+    // Inisialisasi peta dengan fullscreen control
+    var map = L.map('map', {
+        fullscreenControl: true
+    }).setView([1.500016, 124.840478], 7);
+
     // Tambahkan layer peta dari OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-    
-    // Ambil data lokasi dari lokasi.json
+
+    // Tambahkan kontrol pencarian lokasi
+    var geocoderControl = L.Control.geocoder({
+        defaultMarkGeocode: false // Supaya tidak menambahkan marker di peta
+    })
+    .on('markgeocode', function(e) {
+        var center = e.geocode.center;
+        map.setView(center, 13); // Arahkan peta ke lokasi hasil pencarian
+    })
+    .addTo(map);
+
+    // Fetch data lokasi
     fetch('data/lokasi.json')
         .then(response => response.json())
         .then(data => {
             data.forEach(lokasi => {
                 var marker = L.marker([lokasi.lat, lokasi.lng]).addTo(map);
-                
                 var popupContent = `
                     <div style="text-align: center;">
                         <img src="${lokasi.gambar}" alt="${lokasi.nama}" width="150" height="100" style="border-radius: 5px;"><br>
@@ -24,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         <a href="detail.html?id=${lokasi.id}" style="display: inline-block; padding: 5px 10px; background: #28A745; color: #fff; text-decoration: none; border-radius: 3px;">Detail Tempat</a>
                     </div>
                 `;
-                
                 marker.bindPopup(popupContent);
             });
         })
