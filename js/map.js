@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Inisialisasi peta dengan fullscreen control
     var map = L.map('map', {
         fullscreenControl: true
-    }).setView([1.500016, 124.840478], 7);
+    }).setView([1.500016, 124.840478], 8);
 
     // Tambahkan layer peta dari OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Tambahkan kontrol pencarian lokasi
     var geocoderControl = L.Control.geocoder({
-        defaultMarkGeocode: false // Supaya tidak menambahkan marker di peta
+        defaultMarkGeocode: false
     })
     .on('markgeocode', function(e) {
         var center = e.geocode.center;
-        map.setView(center, 13); // Arahkan peta ke lokasi hasil pencarian
+        map.setView(center, 13);
     })
     .addTo(map);
 
@@ -24,7 +24,34 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             data.forEach(lokasi => {
+                // Tentukan warna berdasarkan risiko
+                let warna;
+                switch (lokasi.risiko.toLowerCase()) {
+                    case 'tinggi':
+                        warna = 'red';
+                        break;
+                    case 'sedang':
+                        warna = 'orange';
+                        break;
+                    case 'rendah':
+                        warna = 'green';
+                        break;
+                    default:
+                        warna = 'blue';
+                }
+
+                // Tambahkan lingkaran sebagai efek "dikit"
+                L.circle([lokasi.lat, lokasi.lng], {
+                    color: warna,
+                    fillColor: warna,
+                    fillOpacity: 0.25,
+                    radius: 1000
+                }).addTo(map);
+
+                // Tambahkan marker
                 var marker = L.marker([lokasi.lat, lokasi.lng]).addTo(map);
+
+                // Isi popup
                 var popupContent = `
                     <div style="text-align: center;">
                         <img src="${lokasi.gambar}" alt="${lokasi.nama}" width="150" height="100" style="border-radius: 5px;"><br>
